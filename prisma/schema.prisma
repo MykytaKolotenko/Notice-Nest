@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model contacts {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  /// Field referred in an index, but found no data to define the type.
+  email Json?  @unique(map: "email_1")
+}
+
+model Users {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  avatarURL         String
+  email             String  @unique(map: "email_1")
+  password          String
+  subscription      String
+  token             String
+  verificationToken String
+  verify            Boolean
+}
