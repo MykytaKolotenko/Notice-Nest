@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  
 }
 
 datasource db {
@@ -7,19 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model contacts {
+model notices {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   /// Field referred in an index, but found no data to define the type.
-  email Json?  @unique(map: "email_1")
+  title String  
+  text String
 }
 
-model Users {
+model users {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  avatarURL         String
+  avatarURL         String 
   email             String  @unique(map: "email_1")
   password          String
   subscription      String
-  token             String
-  verificationToken String
+  token             String? 
+  verificationToken String?
   verify            Boolean
 }
