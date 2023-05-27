@@ -8,14 +8,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model notices {
+model notice {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   /// Field referred in an index, but found no data to define the type.
   title String  
   text String
 }
 
-model users {
+model user {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   avatarURL         String 
   email             String  @unique(map: "email_1")

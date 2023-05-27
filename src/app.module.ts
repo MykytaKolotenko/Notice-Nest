@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { NoticesModule } from './notices/notices.module';
 
 @Module({
-  imports: [],
+  imports: [NoticesModule],
   controllers: [AppController],
   providers: [AppService],
 })
