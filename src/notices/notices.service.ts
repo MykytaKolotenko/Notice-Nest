@@ -11,7 +11,26 @@ export class NoticesService {
     return await this.prisma.notice.findMany();
   }
 
+  async findOne(id: string): Promise<notice> {
+    return await this.prisma.notice.findUnique({
+      where: { id },
+    });
+  }
+
   async create(data: INotice): Promise<notice> {
     return await this.prisma.notice.create({ data });
+  }
+
+  async delete(id: string): Promise<notice> {
+    return await this.prisma.notice.delete({
+      where: { id },
+    });
+  }
+
+  async update(id: string, data: INotice): Promise<notice> {
+    return await this.prisma.notice.update({
+      where: { id },
+      data: { ...data },
+    });
   }
 }

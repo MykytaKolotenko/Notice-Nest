@@ -10,6 +10,15 @@ export default class ErrorsFactory {
       case 'text':
         return new CustomError('Text is required', 404);
 
+      case 'uknown server error':
+        return new CustomError('Unknown Error', 520);
+
+      case 'notice not found':
+        return new CustomError('Notice not found', 404);
+
+      case 'incorect id':
+        return new CustomError('Insert correct id', 404);
+
       default:
         return new BadRequestException();
     }
