@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { notice } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
-import { INotice } from './notices.controller';
+import { INoticeCreate } from './notices.dto';
 
 @Injectable()
 export class NoticesService {
@@ -17,7 +17,7 @@ export class NoticesService {
     });
   }
 
-  async create(data: INotice): Promise<notice> {
+  async create(data: INoticeCreate): Promise<notice> {
     return await this.prisma.notice.create({ data });
   }
 
@@ -27,7 +27,7 @@ export class NoticesService {
     });
   }
 
-  async update(id: string, data: INotice): Promise<notice> {
+  async update(id: string, data: INoticeCreate): Promise<notice> {
     return await this.prisma.notice.update({
       where: { id },
       data: { ...data },

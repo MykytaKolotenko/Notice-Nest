@@ -10,16 +10,7 @@ import {
 import { NoticesService } from './notices.service';
 import { notice } from '@prisma/client';
 import throwError from '../helpers/errors';
-
-export interface INotice {
-  id: string;
-  title: string;
-  text: string;
-}
-
-export interface IParams {
-  id: string;
-}
+import { INoticeCreate, IParams } from './notices.dto';
 
 @Controller('notices')
 export class NoticesController {
@@ -44,11 +35,11 @@ export class NoticesController {
   }
 
   @Post()
-  async create(@Body() data: INotice): Promise<notice> {
-    if (!data.title) throwError('title');
-    if (!data.text) throwError('text');
+  async create(@Body() { title, text }: INoticeCreate): Promise<notice> {
+    if (!title) throwError('title');
+    if (!text) throwError('text');
 
-    return await this.noticesService.create(data);
+    return await this.noticesService.create({ title, text });
   }
 
   @Delete(':id')
@@ -61,7 +52,7 @@ export class NoticesController {
   }
 
   @Patch(':id')
-  async update(@Param() { id }: IParams, data: INotice): Promise<notice> {
+  async update(@Param() { id }: IParams, data: notice): Promise<notice> {
     return await this.noticesService.update(id, data);
   }
 }

@@ -19,6 +19,17 @@ export default class ErrorsFactory {
       case 'incorect id':
         return new CustomError('Insert correct id', 404);
 
+      // __________________auth______________________________________
+
+      case 'email':
+        return new CustomError('Email is required', 404);
+
+      case 'password ':
+        return new CustomError('Password is required', 404);
+
+      case 'user not found':
+        return new CustomError('Email or password wrong. User not found!', 404);
+
       default:
         return new BadRequestException();
     }

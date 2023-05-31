@@ -17,11 +17,11 @@ model notice {
 
 model user {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  avatarURL         String 
+  avatarURL         String? 
   email             String  @unique(map: "email_1")
   password          String
-  subscription      String
+  subscription      String?
   token             String? 
   verificationToken String?
-  verify            Boolean
+  verify            Boolean?
 }
