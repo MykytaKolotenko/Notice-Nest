@@ -34,7 +34,9 @@ export class AuthService {
     if (!isPasswordValid) throwError('user not found');
 
     const payload = { id: userData.id, username: userData.email };
-    return await this.jwtService.signAsync(payload);
+    return await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+    });
   }
 
   async setAccessToken(email: string, accessToken: string): Promise<IToken> {
@@ -46,5 +48,31 @@ export class AuthService {
     if (!token) throwError('uknown server error');
 
     return { access_token: token };
+  }
+
+  async findUserByAccessToken(accessToken: string): Promise<user> {
+    const id = await this.getUserIdByToken(accessToken);
+
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async unsetToken(accessToken: string): Promise<boolean> {
+    const id = await this.getUserIdByToken(accessToken);
+
+    const data = await this.prisma.user.update({
+      where: { id },
+      data: { token: null },
+    });
+
+    if (!data) throwError('unknown server error');
+    return true;
+  }
+
+  async getUserIdByToken(access_token: string): Promise<string> {
+    const { id } = await this.jwtService.verifyAsync(access_token, {
+      secret: process.env.JWT_SECRET,
+    });
+
+    return id;
   }
 }
