@@ -5,6 +5,7 @@ import { IBodyData, IToken } from './auth.dto';
 import throwError from 'src/helpers/errors';
 import { Request } from 'express';
 import getTokenFromBearer from 'src/helpers/getTokenFromBearer';
+// need to do another  validation through Nest
 
 @Controller('auth')
 export class AuthController {
